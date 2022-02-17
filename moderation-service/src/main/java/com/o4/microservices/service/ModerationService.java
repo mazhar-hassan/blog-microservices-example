@@ -1,10 +1,11 @@
 package com.o4.microservices.service;
 
-import com.o4.microservices.api.EventBusApi;
+import com.o4.microservices.api.RestClient;
 import com.o4.microservices.dto.BusEvent;
 import com.o4.microservices.dto.EventType;
 import com.o4.microservices.dto.comments.Comment;
 import com.o4.microservices.dto.comments.CommentStatus;
+import com.o4.microservices.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ModerationService {
 
-    private final EventBusApi busApi;
+    private final RestClient busApi;
 
-    public ModerationService(EventBusApi busApi) {
+    public ModerationService(RestClient busApi) {
         this.busApi = busApi;
     }
 
@@ -31,7 +32,10 @@ public class ModerationService {
 
     public void handleEvent(BusEvent event) {
         if (EventType.COMMENT_CREATED == event.getType()) {
-            moderate((Comment) event.getData());
+            Comment comment = JsonUtils.convert(event.getData(), Comment.class);
+            moderate(comment);
+        } else {
+            log.warn("[MS] Ignoring event: {}", event.getType());
         }
     }
 }

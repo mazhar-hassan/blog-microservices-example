@@ -1,6 +1,6 @@
 package com.o4.microservices.service;
 
-import com.o4.microservices.api.EventBusApi;
+import com.o4.microservices.api.RestClient;
 import com.o4.microservices.dto.BusEvent;
 import com.o4.microservices.dto.EventType;
 import com.o4.microservices.dto.posts.BasicPost;
@@ -16,11 +16,11 @@ import java.util.Map;
 @Service
 public class PostService {
 
-    private final EventBusApi busApi;
+    private final RestClient busApi;
 
     private final Map<String, Post> posts = new HashMap<>();
 
-    public PostService(EventBusApi busApi) {
+    public PostService(RestClient busApi) {
         this.busApi = busApi;
     }
 

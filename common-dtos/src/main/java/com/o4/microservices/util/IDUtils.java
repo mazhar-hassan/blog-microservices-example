@@ -2,9 +2,9 @@ package com.o4.microservices.util;
 
 import java.util.UUID;
 
-public class IDUtils {
+public interface IDUtils {
 
-    public static String nextID() {
+    static String nextID() {
         return UUID.randomUUID().toString();
     }
 }
