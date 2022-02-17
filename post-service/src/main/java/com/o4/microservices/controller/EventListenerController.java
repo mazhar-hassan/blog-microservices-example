@@ -15,7 +15,7 @@ public class EventListenerController {
     @PostMapping
     public String onEvent(@RequestBody BusEvent event) {
         log.info("Event received: {}", event.getType());
-
-        return "Received:" + event.getType();
+        log.warn("[PS] ignore event {}", event.getType());
+        return "[RCV-PS] " + event.getType();
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public class EventService {
 
     private final List<CallBack> callBacks = new ArrayList<>();
+    private final List<BusEvent> events = new ArrayList<>();
 
     public EventService(EventHookSender sender) {
 
@@ -28,7 +29,16 @@ public class EventService {
         }
     }
 
+    public List<BusEvent> getEvents() {
+        return events;
+    }
+
     public void handleEvent(BusEvent event) {
+
+        //persist event
+        events.add(event);
+
+        //update callbacks
         callBacks.forEach(callBack -> {
             callBack.setEvent(event);
             new Thread(callBack).start();

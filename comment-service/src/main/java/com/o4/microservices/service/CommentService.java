@@ -64,7 +64,7 @@ public class CommentService {
             Comment comment = JsonUtils.convert(event.getData(), Comment.class);
             update(comment);
         } else {
-            log.warn("Ignoring event {}", event.getType());
+            log.warn("[CS] Ignoring event {}", event.getType());
         }
     }
 }

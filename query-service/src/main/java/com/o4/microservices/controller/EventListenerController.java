@@ -25,6 +25,6 @@ public class EventListenerController {
 
         service.handleEvent(event);
 
-        return "QueryService: received(" + event.getType()+")";
+        return "[RCV-QS] " + event.getType();
     }
 }

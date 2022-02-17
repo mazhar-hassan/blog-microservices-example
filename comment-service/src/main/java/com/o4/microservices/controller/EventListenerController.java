@@ -24,6 +24,6 @@ public class EventListenerController {
         log.info("Event received: {}", event.getType());
         service.handleEvent(event);
 
-        return "Received:" + event.getType();
+        return "[RCV-CS] " + event.getType();
     }
 }

@@ -2,6 +2,7 @@ package com.o4.microservices;
 
 import com.o4.microservices.dto.BusEvent;
 import com.o4.microservices.service.EventHookSender;
+import feign.RetryableException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
@@ -34,6 +35,8 @@ public class CallBack implements Runnable {
         try {
             String response = sender.send(uri, event);
             log.info("Response received: {}", response);
+        } catch (RetryableException e) {
+            log.error("Connection refused: {} Service may be down", serviceName);
         } catch (Exception e) {
             log.error("Failed to publish event", e);
         }
