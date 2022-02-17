@@ -1,2 +1,4 @@
 **/.mvn/**
 **/mvnw**
+/.idea/**
+**/target/**
