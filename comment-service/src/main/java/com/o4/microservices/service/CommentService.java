@@ -2,6 +2,7 @@ package com.o4.microservices.service;
 
 import com.o4.microservices.api.EventBusApi;
 import com.o4.microservices.dto.BusEvent;
+import com.o4.microservices.dto.EventType;
 import com.o4.microservices.dto.comments.BasicComment;
 import com.o4.microservices.dto.comments.Comment;
 import com.o4.microservices.dto.comments.CommentStatus;
@@ -32,7 +33,7 @@ public class CommentService {
         comments.putIfAbsent(postId, new ArrayList<>());
         comments.get(postId).add(comment);
 
-        busApi.publish(new BusEvent("COMMENT_CREATED", comment));
+        busApi.publish(new BusEvent(EventType.COMMENT_CREATED, comment));
 
         return comment;
     }
@@ -47,7 +48,7 @@ public class CommentService {
             existing.setStatus(comment.getStatus());
             existing.setTitle(comment.getTitle());
 
-            busApi.publish(new BusEvent("COMMENT_UPDATED", existing));
+            busApi.publish(new BusEvent(EventType.COMMENT_UPDATED, existing));
         } else {
             log.warn("Comment not found, post:{} and comment:{}", comment.getPostId(), comment.getId());
         }
@@ -55,5 +56,11 @@ public class CommentService {
 
     public List<Comment> list(String postId) {
         return comments.get(postId);
+    }
+
+    public void handleEvent(BusEvent event) {
+        if (EventType.COMMENT_MODERATED == event.getType()) {
+            update((Comment) event.getData());
+        }
     }
 }

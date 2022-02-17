@@ -1,7 +1,6 @@
 package com.o4.microservices.controller;
 
 import com.o4.microservices.dto.BusEvent;
-import com.o4.microservices.dto.comments.Comment;
 import com.o4.microservices.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,10 +21,9 @@ public class EventListenerController {
 
     @PostMapping
     public String onEvent(@RequestBody BusEvent event) {
-        log.info("Event received: {}", event.getEvent());
-        if ("COMMENT_MODERATED".equals(event.getEvent())) {
-            service.update((Comment) event.getData());
-        }
-        return "Received:" + event.getEvent();
+        log.info("Event received: {}", event.getType());
+        service.handleEvent(event);
+
+        return "Received:" + event.getType();
     }
 }

@@ -2,6 +2,7 @@ package com.o4.microservices.service;
 
 import com.o4.microservices.api.EventBusApi;
 import com.o4.microservices.dto.BusEvent;
+import com.o4.microservices.dto.EventType;
 import com.o4.microservices.dto.comments.Comment;
 import com.o4.microservices.dto.comments.CommentStatus;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,12 @@ public class ModerationService {
             comment.setStatus(CommentStatus.APPROVED);
         }
 
-        busApi.publish(new BusEvent("COMMENT_MODERATED", comment));
+        busApi.publish(new BusEvent(EventType.COMMENT_MODERATED, comment));
     }
 
+    public void handleEvent(BusEvent event) {
+        if (EventType.COMMENT_CREATED == event.getType()) {
+            moderate((Comment) event.getData());
+        }
+    }
 }

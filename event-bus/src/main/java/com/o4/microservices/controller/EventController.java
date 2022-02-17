@@ -21,6 +21,6 @@ public class EventController {
     public String onEvent(@RequestBody BusEvent event) {
         service.handleEvent(event);
 
-        return "EventHub - Received:" + event.getEvent();
+        return "EventHub - Received:" + event.getType();
     }
 }

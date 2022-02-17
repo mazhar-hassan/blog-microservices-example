@@ -1,7 +1,7 @@
 package com.o4.microservices.controller;
 
-import com.o4.microservices.dto.BasicPost;
-import com.o4.microservices.dto.Post;
+import com.o4.microservices.dto.posts.BasicPost;
+import com.o4.microservices.dto.posts.Post;
 import com.o4.microservices.service.PostService;
 import org.springframework.web.bind.annotation.*;
 

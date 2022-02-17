@@ -1,9 +1,10 @@
 package com.o4.microservices.service;
 
 import com.o4.microservices.api.EventBusApi;
-import com.o4.microservices.dto.BasicPost;
 import com.o4.microservices.dto.BusEvent;
-import com.o4.microservices.dto.Post;
+import com.o4.microservices.dto.EventType;
+import com.o4.microservices.dto.posts.BasicPost;
+import com.o4.microservices.dto.posts.Post;
 import com.o4.microservices.util.IDUtils;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class PostService {
         post.setTitle(dto.getTitle());
 
         posts.put(post.getId(), post);
-        busApi.publish(new BusEvent("POST_CREATED", post));
+        busApi.publish(new BusEvent(EventType.POST_CREATED, post));
 
         return post;
     }

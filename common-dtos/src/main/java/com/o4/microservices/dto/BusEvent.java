@@ -1,23 +1,24 @@
 package com.o4.microservices.dto;
 
 public class BusEvent {
-    private String event;
+
+    private EventType type;
     private Object data;
 
     public BusEvent() {
     }
 
-    public BusEvent(String event, Object data) {
-        this.event = event;
+    public BusEvent(EventType type, Object data) {
+        this.type = type;
         this.data = data;
     }
 
-    public String getEvent() {
-        return event;
+    public EventType getType() {
+        return type;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    public void setType(EventType type) {
+        this.type = type;
     }
 
     public Object getData() {

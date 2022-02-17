@@ -22,10 +22,8 @@ public class EventListenerController {
 
     @PostMapping
     public String onEvent(@RequestBody BusEvent event) {
-        log.info("Event received: {}", event.getEvent());
-        if ("COMMENT_CREATED".equals(event.getEvent())) {
-            service.moderate((Comment) event.getData());
-        }
-        return "Received:" + event.getEvent();
+        log.info("Event received: {}", event.getType());
+        service.handleEvent(event);
+        return "Received:" + event.getType();
     }
 }

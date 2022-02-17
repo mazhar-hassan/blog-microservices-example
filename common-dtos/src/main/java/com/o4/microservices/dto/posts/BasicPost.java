@@ -1,4 +1,4 @@
-package com.o4.microservices.dto;
+package com.o4.microservices.dto.posts;
 
 public class BasicPost {
     private String title;

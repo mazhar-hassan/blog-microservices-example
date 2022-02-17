@@ -1,6 +1,7 @@
-package com.o4.microservices.dto;
+package com.o4.microservices.dto.posts;
 
 public class Post extends BasicPost {
+
     private String id;
 
     public String getId() {
