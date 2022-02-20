@@ -59,6 +59,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>micro-query-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
