@@ -91,18 +91,43 @@ Assumption you are in parent folder
 `docker rm <container-name>`
 
 ### Start a stopped container
-docker start <container-name>
+`docker start <container-name>`
 
 ### Restart a container
-docker restart <container-name>
+`docker restart <container-name>`
 
 ### Start stopped container
-docker start <container-name>
+`docker start <container-name>`
 
 ### Rename container
-docker rename old_name new_name
+`docker rename old_name new_name`
 
 ### Test a container
 We can start a test container for verification etc
-`docker run -d --name container-name image_name watch "date >> /var/log/date.log"
+`docker run -d --name container-name image_name watch "date >> /var/log/date.log"`
+
+## K8 Deployment
+### Deploy post-deployment
+`kubectl apply -f infrastructure/post-deployment.yml`
+
+#### Useful commands
+* kubectl apply -f configuration-file.yml
+* kubectl get deployments
+* kubectl describe deployment post-depl
+* kubectl get pods
+* kubectl delete pod post-depl-23232323
+
+`kubectl rollout restart deployment post-depl`
+
+`kubectl apply -f infrastructure/post-service.yml`
+
+* kubectl get services
+
+
+|NAME            |TYPE        |CLUSTER-IP      |EXTERNAL-IP   |PORT(S)          |AGE    |
+|----------------|------------|----------------|--------------|-----------------|-------|
+|posts-srv       |NodePort    |10.98.51.238    |\<none>        |8081:31496/TCP   |49s    |
+
+#### Access service through node port
+http://localhost:31496/api/v1/posts
 

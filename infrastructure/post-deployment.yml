@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-depl #name of the deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts #find/manage all the pods with label app=posts
+  template:
+    metadata:
+      labels:
+        app: posts #deployment should create this type of pods with label app=post
+    spec:
+      containers:
+        - name: posts
+          image: blog-post-service:latest
