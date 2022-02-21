@@ -131,3 +131,33 @@ We can start a test container for verification etc
 #### Access service through node port
 http://localhost:31496/api/v1/posts
 
+### NodePort
+#### Deployment for event bus
+`kubectl apply -f infrastructure/event-bus-deployment.yml`
+* deployment.apps/eventbus-depl created
+* service/eventbus-srv created
+
+`kubectl rollout restart deployment eventbus-depl`
+
+* `kubectl get services`
+
+![NodePort Service](images/nodeport-working.png)
+
+### Cluster IP
+#### Deployment of Post
+deployment files are updated with clusterIP configuration in service area
+we will update both eventbus-depl and post-depl in following way
+* Update the codebase of eventbus so that it uses http://post-srv for callback to the post service.
+* Update the codebase of post os that it uses http://eventbus-srv tp publish event.
+* Please remember ClusterIP is only internal services are exposing each other and not accessible from outside
+* In order to access it from outside, we will use our previous NodePort configuration we created for post
+* We will create post using NodePort technique
+* Post service will internally call the eventbus service using ClusterIP
+* EventBus will internally call back post service using ClusterIP
+
+![NodePrt vs ClusterIO](images/nodeport-vs-clusterip.png)
+
+
+`kubectl apply -f infrastructure/post-deployment.yml`
+* deployment.apps/post-depl created
+* service/post-srv created

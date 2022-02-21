@@ -14,4 +14,17 @@ spec:
     spec:
       containers:
         - name: posts
-          image: blog-post-service:latest
+          image: blog-post-service:01
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: post-srv #name of the service
+spec:
+  selector:
+    app: posts #find/manage all the pods with label app=event-bus
+  type: ClusterIP #optional (default value)
+  ports:
+    - name: posts
+      port: 8081
+      targetPort: 8081

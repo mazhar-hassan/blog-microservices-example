@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eventbus-depl #name of the deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eventbus #find/manage all the pods with label app=event-bus
+  template:
+    metadata:
+      labels:
+        app: eventbus #deployment should create this type of pods with label app=postevent-bus
+    spec:
+      containers:
+        - name: eventbus #name of container inside pod
+          image: blog-event-bus:01
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eventbus-srv #name of the service
+spec:
+  selector:
+    app: eventbus #find/manage all the pods with label app=event-bus
+  type: ClusterIP #optional (default value)
+  ports:
+    - name: eventbus
+      port: 8085
+      targetPort: 8085
