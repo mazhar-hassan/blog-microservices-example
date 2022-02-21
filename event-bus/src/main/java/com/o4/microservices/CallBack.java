@@ -31,12 +31,12 @@ public class CallBack implements Runnable {
     }
 
     public void send() {
-        log.info("Callback to service:{} with type:{}", serviceName, event.getType());
+        log.info("**************** Call to service:{} with type:{}", serviceName, event.getType());
         try {
             String response = sender.send(uri, event);
             log.info("Response received: {}", response);
         } catch (RetryableException e) {
-            log.error("Connection refused: {} Service may be down", serviceName);
+            log.error("Connection refused: {} Service may be down at {}", serviceName, uri);
         } catch (Exception e) {
             log.error("Failed to publish event", e);
         }

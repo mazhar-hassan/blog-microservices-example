@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.net.URI;
 
-@FeignClient(name = "the-hook", url = "http://localhost:8081")
+@FeignClient(name = "the-hook", url = "http://host.docker.internal:8081")
 public interface EventHookSender {
 
     @PostMapping("/public/bus-event")

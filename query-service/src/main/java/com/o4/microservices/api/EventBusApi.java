@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@FeignClient(name = "event-bus", url = "http://localhost:8085")
+@FeignClient(name = "event-bus", url = "http://host.docker.internal:8085")
 public interface EventBusApi {
 
     @PostMapping("/public/bus-event")
