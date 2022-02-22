@@ -161,3 +161,10 @@ we will update both eventbus-depl and post-depl in following way
 `kubectl apply -f infrastructure/post-deployment.yml`
 * deployment.apps/post-depl created
 * service/post-srv created
+
+
+`kubectl get pods`
+
+To check the logs if we received the event
+
+`kubectl logs eventbus-depl-xcxkcjxkjc-xcxc`
