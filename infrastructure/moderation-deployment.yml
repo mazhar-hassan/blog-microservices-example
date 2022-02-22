@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderation-depl #name of the deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderation #find/manage all the pods with label app=moderation
+  template:
+    metadata:
+      labels:
+        app: moderation #deployment should create this type of pods with label app=moderation
+    spec:
+      containers:
+        - name: moderation
+          image: blog-moderation-service:01
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-srv #name of the service
+spec:
+  selector:
+    app: moderation #find/manage all the pods with label app=moderation
+  type: ClusterIP #optional (default value)
+  ports:
+    - name: moderation
+      port: 8084 #Node port
+      targetPort: 8084 #port of the container

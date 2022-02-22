@@ -24,10 +24,10 @@ public class EventService {
     public EventService(EventHookSender sender) {
 
         try {
-            callBacks.add(new CallBack("[query-service]", sender, new URI("http://host.docker.internal:8083")));
+            callBacks.add(new CallBack("[query-service]", sender, new URI("http://query-srv:8083")));
             callBacks.add(new CallBack("[post-service]", sender, new URI("http://post-srv:8081")));
-            callBacks.add(new CallBack("[comment-service]", sender, new URI("http://host.docker.internal:8082")));
-            callBacks.add(new CallBack("[moderation-service]", sender, new URI("http://host.docker.internal:8084")));
+            callBacks.add(new CallBack("[comment-service]", sender, new URI("http://comment-srv:8082")));
+            callBacks.add(new CallBack("[moderation-service]", sender, new URI("http://moderation-srv:8084")));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

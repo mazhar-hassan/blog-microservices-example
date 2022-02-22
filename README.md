@@ -168,3 +168,32 @@ we will update both eventbus-depl and post-depl in following way
 To check the logs if we received the event
 
 `kubectl logs eventbus-depl-xcxkcjxkjc-xcxc`
+
+### Update remaining services
+`kubectl apply -f infrastructure/comment-deployment.yml`
+* deployment.apps/comment-depl created
+* service/comment-srv created
+
+`kubectl apply -f infrastructure/moderation-deployment.yml`
+* deployment.apps/moderation-depl created
+* service/moderation-srv created
+
+`kubectl apply -f infrastructure/query-deployment.yml`
+* deployment.apps/query-depl created
+* service/query-srv created
+
+### Apply all configuration at once
+`cd infrastructure`
+
+`kubectl apply -f .`
+
+### Restart eventbus deployment
+`kubectl rollout restart deployment eventbus-depl`
+
+![Running Services](images/running-services.png)
+
+* Comment, eventbus, moderation and query service type is **"ClusterIP"**
+* Post service has one **"ClusterIP"** service for internal access
+* Post service has another **"NodePort"** for external access through port number
+
+![Communication between NodePrt and ClusterIO](images/nodeport-vs-clusterip-2.png)

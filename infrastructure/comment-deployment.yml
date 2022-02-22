@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comment-depl #name of the deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comment #find/manage all the pods with label app=comment
+  template:
+    metadata:
+      labels:
+        app: comment #deployment should create this type of pods with label app=comment
+    spec:
+      containers:
+        - name: comment
+          image: blog-comment-service:01
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: comment-srv #name of the service
+spec:
+  selector:
+    app: comment #find/manage all the pods with label app=comment
+  type: ClusterIP #optional (default value)
+  ports:
+    - name: comment
+      port: 8082 #Node port
+      targetPort: 8082 #port of the container
