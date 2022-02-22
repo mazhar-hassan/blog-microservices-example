@@ -197,3 +197,11 @@ To check the logs if we received the event
 * Post service has another **"NodePort"** for external access through port number
 
 ![Communication between NodePrt and ClusterIO](images/nodeport-vs-clusterip-2.png)
+
+## Load Balancer Service
+* When load balancer service is applied to cluster
+* Cluster request cloud provider AWS, Azure or Google
+* Cloud provider provision a load balancer outside of cluster
+* External clients can communicate through this provisioned load balancer
+* Load balancer then forward the request to respective resource
+  ![Communication between NodePrt and ClusterIO](images/loadbalancer-service.png)
