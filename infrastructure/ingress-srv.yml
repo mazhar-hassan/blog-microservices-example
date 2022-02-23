@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - host: local.blog.com
+      http:
+        paths:
+          - path: /api/v1/query
+            pathType: Prefix
+            backend:
+              service:
+                name: query-srv #query service
+                port:
+                  number: 8083
+          - path: /api/v1/posts
+            pathType: Prefix
+            backend:
+              service:
+                name: post-srv #post service
+                port:
+                  number: 8081
+          - path: /api/v1/pc
+            pathType: Prefix
+            backend:
+              service:
+                name: comment-srv #comment service
+                port:
+                  number: 8082

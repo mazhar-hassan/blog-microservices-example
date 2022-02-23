@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/posts")
+@RequestMapping("/api/v1/query")
 public class QueryController {
 
     private final QueryService service;
@@ -19,12 +19,12 @@ public class QueryController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/posts")
     public List<BlogPost> list() {
         return service.list();
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping("/posts/{postId}")
     public BlogPost findPostById(@PathVariable("postId") String postId) {
         return service.findPostById(postId);
     }

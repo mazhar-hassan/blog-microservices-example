@@ -204,4 +204,68 @@ To check the logs if we received the event
 * Cloud provider provision a load balancer outside of cluster
 * External clients can communicate through this provisioned load balancer
 * Load balancer then forward the request to respective resource
-  ![Communication between NodePrt and ClusterIO](images/loadbalancer-service.png)
+
+![Communication between NodePrt and ClusterIO](images/loadbalancer-service.png)
+
+## Ingress Controller
+![Ingress Controller](images/ingress-controller.png)
+
+### ingress-nginx
+Opensource project that will help use create Load Balancer and an ingress
+
+https://kubernetes.github.io/ingress-nginx/
+
+https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
+
+### Install Ingress Nginx
+`kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml`
+* namespace/ingress-nginx created
+* serviceaccount/ingress-nginx created
+* configmap/ingress-nginx-controller created
+* clusterrole.rbac.authorization.k8s.io/ingress-nginx created
+* clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx created
+* role.rbac.authorization.k8s.io/ingress-nginx created
+* rolebinding.rbac.authorization.k8s.io/ingress-nginx created
+* service/ingress-nginx-controller-admission created
+* service/ingress-nginx-controller created
+* deployment.apps/ingress-nginx-controller created
+* ingressclass.networking.k8s.io/nginx created
+* validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission created
+* serviceaccount/ingress-nginx-admission created
+* clusterrole.rbac.authorization.k8s.io/ingress-nginx-admission created
+* clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+* role.rbac.authorization.k8s.io/ingress-nginx-admission created
+* rolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+* job.batch/ingress-nginx-admission-create created
+* job.batch/ingress-nginx-admission-patch created
+
+### Preflight check
+`kubectl get pods --namespace=ingress-nginx`
+
+### Configuring every thing
+1. Update prefix for comment service to /api/v1/pc
+2. Update prefix for query service to /api/v1/query
+3. Rebuild comment-service image `docker build -t blog-comment-service:01 -f comment-service/Dockerfile .`
+4. Rebuild query-service image `docker build -t blog-query-service:01 -f query-service/Dockerfile .`
+5. Restart comment deployment `kubectl rollout restart deployment comment-depl`
+6. Restart query deployment `kubectl rollout restart deployment query-depl`
+7. Update `ingress-srv.yml` with new paths as prefix
+8. Apply ingress changes `kubectl apply -f infrastructure/ingress-srv.yml`
+
+### Update host file
+open host file
+`C:\Windows\System32\drivers\etc\hosts` or `/etc/hosts`
+add following entry
+
+`127.0.0.1 local.blog.com`
+
+Now you can access the URLs
+#### Create Post
+* POST http://local.blog.com/api/v1/posts
+#### Create Comment
+* POST http://local.blog.com/api/v1/pc/2348b232-5cc8-4af9-b3d4-f61208bfbe86/comments
+#### Access Data
+* GET http://local.blog.com/api/v1/query/posts
+* GET http://local.blog.com/api/v1/query/posts/2348b232-5cc8-4af9-b3d4-f61208bfbe86
+
+![Ingress enabled app](images/ingress-enabled-app.png)

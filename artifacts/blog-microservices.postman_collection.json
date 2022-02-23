@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "daad9ebd-3895-4292-9e08-9f9e6a0dae97",
+		"name": "blog-microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"All in one\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://local.blog.com/api/v1/posts",
+					"protocol": "http",
+					"host": [
+						"local",
+						"blog",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Comment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"My comments Tillo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://local.blog.com/api/v1/pc/2348b232-5cc8-4af9-b3d4-f61208bfbe86/comments",
+					"protocol": "http",
+					"host": [
+						"local",
+						"blog",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pc",
+						"2348b232-5cc8-4af9-b3d4-f61208bfbe86",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "QueryService-byPostId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"My first comments\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://local.blog.com/api/v1/query/posts/2348b232-5cc8-4af9-b3d4-f61208bfbe86",
+					"protocol": "http",
+					"host": [
+						"local",
+						"blog",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"query",
+						"posts",
+						"2348b232-5cc8-4af9-b3d4-f61208bfbe86"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "QueryService-LIST",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"My first comments\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://local.blog.com/api/v1/query/posts/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"blog",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"query",
+						"posts",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
