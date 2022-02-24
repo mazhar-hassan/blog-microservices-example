@@ -3,20 +3,24 @@ WORKDIR /o4/dtos
 VOLUME /root/.m2/repository
 
 COPY common-dtos/pom.xml pom.xml
-RUN mvn dependency:resolve
+RUN mvn clean package -DskipTest -DskipMain
+RUN rm -r target
 
 COPY common-dtos/src src
 RUN mvn clean install
 
 WORKDIR /o4/build
 
+# To resolve dependencies in a safe way (no re-download when the source code changes)
 COPY post-service/pom.xml pom.xml
-RUN mvn dependency:resolve
+RUN mvn clean package -DskipTest -DskipMain
+RUN rm -r target
 
+#package application
 COPY post-service/src src
 RUN mvn clean package
 
-# Build actual image
+# Build actual docker-image
 FROM amazoncorretto:11 as PREPARE
 WORKDIR /api
 

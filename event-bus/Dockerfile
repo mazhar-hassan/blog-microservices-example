@@ -3,7 +3,9 @@ WORKDIR /o4/dtos
 VOLUME /root/.m2/repository
 
 COPY common-dtos/pom.xml pom.xml
-RUN mvn dependency:resolve
+RUN mvn clean package -DskipTest -DskipMain
+RUN rm -r target
+
 
 COPY common-dtos/src src
 RUN mvn clean install
@@ -11,7 +13,8 @@ RUN mvn clean install
 WORKDIR /o4/build
 
 COPY event-bus/pom.xml pom.xml
-RUN mvn dependency:resolve
+RUN mvn clean package -DskipTest -DskipMain
+RUN rm -r target
 
 COPY event-bus/src src
 RUN mvn clean package

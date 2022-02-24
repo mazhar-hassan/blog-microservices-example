@@ -65,6 +65,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${project.parent.version}</version>
+				<configuration>
+					<mainClass>com.o4.microservices.CommentServiceApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
