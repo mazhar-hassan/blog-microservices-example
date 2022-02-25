@@ -269,3 +269,18 @@ Now you can access the URLs
 * GET http://local.blog.com/api/v1/query/posts/2348b232-5cc8-4af9-b3d4-f61208bfbe86
 
 ![Ingress enabled app](images/ingress-enabled-app.png)
+
+### Skaffold
+Check the website and install according to your operating systems
+for windows
+Download following file and rename it to and place in your path
+https://storage.googleapis.com/skaffold/releases/latest/skaffold-windows-amd64.exe
+
+#### Configuration 
+Create skaffold.yml file and enter the contents ![Skaffold](skaffold.yml)
+
+`skaffold build`
+
+#### Run every thing
+`skaffold dev`
+

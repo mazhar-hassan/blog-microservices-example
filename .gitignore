@@ -2,3 +2,4 @@
 **/mvnw**
 /.idea/**
 **/target/**
+**/*.iml
