@@ -277,10 +277,19 @@ Download following file and rename it to and place in your path
 https://storage.googleapis.com/skaffold/releases/latest/skaffold-windows-amd64.exe
 
 #### Configuration 
-Create skaffold.yml file and enter the contents ![Skaffold](skaffold.yml)
+Create skaffold.yml file and enter the contents [Skaffold](skaffold.yaml)
 
 `skaffold build`
 
 #### Run every thing
 `skaffold dev`
+
+### Error running skaffold
+#### Validation error
+
+Error from server (InternalError): error when creating "STDIN": Internal error occurred: failed calling webhook "validate.nginx.ingress.kubernetes.io": Post "https://ingress-nginx-controller-admission.ingress-nginx.svc:443/networking/v1/ingresses?timeout=10s": context deadline exceeded
+
+run following command
+`kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission`
+
 
