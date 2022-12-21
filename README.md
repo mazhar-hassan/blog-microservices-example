@@ -1,19 +1,50 @@
 # blog-microservices-example
 It's a sample microservices example repository contains multiple spring boot projects
 
-This repository contains 5 service and 1 Library project
+This repository contains 5 service and 1 Library project and all the data contains within the memory as not database is associated right now.
 
-## 0 - common-dtos
+![MicroServices](images/blog-microservices-architecture.png)
+
+
+## 1 - common-dtos
+This is a Java library project and contains all the DTOs that are common all the 5 microservices.
+Microservices are dependent on this libaray project, right now it cannot not be published anywhere hence we have to publish it in local m2 repository.
+
 `mvn clean install`
 
-User above command to install this lib project in local m2 directory
+Use above command to install this lib project in local m2 directory
 
+Great now our other projects when need this dependency they will get it from local m2 repository
 
-## 1 - post-service
+![M2 Directory](images/m2-directory.png)
+Here this snapshot folder contains our JAR file which will be used by other projects as dependency (microservices)
+
+    <dependency>
+        <groupId>com.o4.microservices</groupId>
+        <artifactId>common-dtos</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+
+## 2 - post-service
 http://localhost:8081
 
-## 2 -  comment-service
+Post service contains all the CRUD operations (right now only create and list)
+
+Listens
+* Ignore all events
+* POST /public/bus-event - A web hook for event listner
+
+Publish
+* POST_CREATED
+
+### Exposes
+* POST /api/v1/posts - To create a new post
+* GET /api/v1/posts - List existing posts
+
+## 3 -  comment-service
 http://localhost:8082
+
+Comment service contains all the CRUD operations (right now only create and list)
 
 Exposes
 * POST /api/v1/posts/{postId}/comments
@@ -21,11 +52,14 @@ Exposes
 
 Listens
 * COMMENT_MODERATED
+* POST /public/bus-event - A web hook for event listner
 
 Publish
+* COMMENT_CREATED
 * COMMENT_UPDATED
 
-## 3 - moderation-service
+
+## 4 - moderation-service
 http://localhost:8084
 
 Exposes
@@ -33,25 +67,43 @@ Exposes
 
 Listens
 * COMMENT_CREATED
+* POST /public/bus-event - A web hook for event listner
 
 Publish
 * COMMENT_MODERATED
 
 
-## 4 - query-service
+## 5 - query-service
 http://localhost:8083
 
-## 5 - event-bus
+Exposes
+* GET /api/v1/query/posts - Return list of post with their comments
+* GET /api/v1/query/posts/{postId} - Return a post with comments against provided post id
+
+Listens
+* COMMENT_CREATED
+* POST /public/bus-event - A web hook for event listner
+
+Publish
+* COMMENT_MODERATED
+
+
+## 6 - event-bus
 http://localhost:8085
+
+
+Exposes
+ * POST /public/bus-event - Publish an event
+ * GET /public/bus-event - list events
+ 
 
 
 # Dockerize Services
 
 ### Build docker image
 Assumption you are in parent folder
-* Build docker image
-* Tag it with mic-qs
-* With version 01
+* Build docker image and tag with version 01
+* Repeat this one by one for all 5 microservices
 * Point to child directory where exist the relevant docker file
 
 * `docker build -t blog-post-service:01 -f post-service/Dockerfile .`
@@ -59,6 +111,9 @@ Assumption you are in parent folder
 * `docker build -t blog-query-service:01 -f query-service/Dockerfile .`
 * `docker build -t blog-moderation-service:01 -f moderation-service/Dockerfile .`
 * `docker build -t blog-event-bus:01 -f event-bus/Dockerfile .`
+
+LIST all created Images `docker images`
+
 
 
 
@@ -69,7 +124,7 @@ Assumption you are in parent folder
 * `docker run -d --name mic-moderation -p 8084:8084 blog-moderation-service:01`
 * `docker run -d --name mic-event-bus -p 8085:8085 blog-event-bus:01`
 
-
+#### List local images
 
 
 ### Useful commands
