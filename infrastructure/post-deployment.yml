@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: post-depl #name of the deployment
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: posts #find/manage all the pods with label app=posts
@@ -12,7 +12,7 @@ spec:
       labels:
         app: posts #deployment should create this type of pods with label app=post
     spec:
-      containers:
+      containers: # These are specs for the containers to be launched in pods
         - name: posts
           image: blog-post-service:01
 ---
